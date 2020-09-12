@@ -19,7 +19,7 @@ namespace PassGen
 
             var password = GetPassword(requirement.Length);
 
-            while(CheckPassword(password, requirement))
+            while(!CheckPassword(password, requirement))
             {
                 password = GetPassword(requirement.Length);
             }
@@ -58,7 +58,7 @@ namespace PassGen
         private static char GetRandomPasswordChar() => Convert.ToChar(GetRandomCharCode(MinCharValue, MaxCharValue));
 
         public static bool CheckPasswordReuirements(PasswordRequirements r)=> r.Length >= (r.UpperLettersCount + r.DigitsCount + r.NonLettersCount);
-        public static bool CheckPassword(string s, PasswordRequirements r)=> 
+        public static bool CheckPassword(string s, PasswordRequirements r) =>
                 s.Length == r.Length
                 && CheckUpperCaseCount(s, r.UpperLettersCount)
                 && CheckDigitsCaseCount(s, r.DigitsCount)
@@ -74,7 +74,7 @@ namespace PassGen
         private static bool CheckNonLettersCount(string s, int count) => GetNonLettersCount(s) >= count;
         private static int GetUpperLettersCount(string s) => s.Count((c) => char.IsUpper(c));
         private static int GetDigitsCount(string s) => s.Count((c) => char.IsDigit(c));
-        private static int GetNonLettersCount(string s) => s.Count((c) => char.IsPunctuation(c));
+        private static int GetNonLettersCount(string s) => s.Count((c) => char.IsPunctuation(c)&&(!char.IsDigit(c)));
 
     }
 }

@@ -3,25 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommandLine;
+
+using CommandLine;
 
 namespace PassGen
 {
     class Program
     {
 
-        private const char ArgSeparator = '='; 
-
         static void Main(string[] args)
         {
 
-
-            var pass = PasswordGenerator.GetPassword(new PasswordRequirements(10, 2, 2, 2));
-            Console.WriteLine(pass);
-            PrintStatistic(pass);
-
-            Console.ReadLine();
+            Parser.Default.ParseArguments<CommandLineGenerateOption>(args)
+                .MapResult((CommandLineGenerateOption o)=> Generate(o), (errs) => Error(errs));
         }
 
+        private static int Generate(CommandLineGenerateOption option)
+        {
+            var requirements = new PasswordRequirements(
+                    option.Length,
+                    option.UpperCharactersCount,
+                    option.DigitsCount,
+                    option.NonLettersCount);
+
+            var pass = PasswordGenerator.GetPassword(requirements);
+
+            Console.WriteLine(pass);
+
+            if (option.PrintStatistic)
+            {
+                PrintStatistic(pass);
+            }
+
+            Console.WriteLine("Press enter to exit.");
+            Console.ReadLine();
+
+            return 1;
+        }
+
+        private static int Error(IEnumerable<Error> errors)
+        {
+            Console.ReadLine();
+            return 1;
+        }
 
         private static void PrintStatistic(string s)
         {
