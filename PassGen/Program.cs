@@ -35,7 +35,7 @@ namespace PassGen
             }
 
 
-            if (option.WaitUserInput)
+            if (!option.Quick)
             {
                 Console.WriteLine("Press enter to exit.");
                 Console.ReadLine();

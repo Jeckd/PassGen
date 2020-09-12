@@ -25,7 +25,7 @@ namespace PassGen
         [Option('s', "stat", Default = false, HelpText = "Print password statisitic")]
         public bool PrintStatistic { get; set; }
 
-        [Option('w', "wait", Default = false, HelpText = "Wait for user input")]
-        public bool WaitUserInput { get; set; }
+        [Option('q', "quick", Default = false, HelpText = "Don't wait for user input for quit")]
+        public bool Quick { get; set; }
     }
 }
