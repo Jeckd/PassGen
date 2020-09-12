@@ -12,6 +12,9 @@ namespace PassGen
         private const int MinCharValue = 0x21;
         private const int MaxCharValue = 0x7E;
 
+        public static int MinCharNum => MinCharValue;
+        public static int MaxCharNum => MaxCharValue;
+
         public static string GetPassword(PasswordRequirements requirement)
         {
             if (!CheckPasswordReuirements(requirement))
@@ -33,27 +36,11 @@ namespace PassGen
 
             for (var i = 0; i < length; i++)
             {
-                sb.Append(GetRandomCharacter());
+                sb.Append(GetRandomPasswordChar());
             }
 
             return sb.ToString();
         }
-
-        private static char GetRandomCharacter()
-        {
-
-            var c = GetRandomPasswordChar();
-
-            while(IsWrongChar(c))
-            {
-                c = GetRandomPasswordChar();
-
-            }
-
-            return c;
-        }
-
-        private static bool IsWrongChar(char c) => char.IsWhiteSpace(c) || char.IsControl(c) || char.IsSurrogate(c);
 
         private static char GetRandomPasswordChar() => Convert.ToChar(GetRandomCharCode(MinCharValue, MaxCharValue));
 
@@ -69,12 +56,12 @@ namespace PassGen
         private static Lazy<Random> random = new Lazy<Random>(() => new Random());
 
 
-        private static bool CheckUpperCaseCount(string s, int count) => GetUpperLettersCount(s) >= count;
-        private static bool CheckDigitsCaseCount(string s, int count) => GetDigitsCount(s) >= count;
-        private static bool CheckNonLettersCount(string s, int count) => GetNonLettersCount(s) >= count;
-        private static int GetUpperLettersCount(string s) => s.Count((c) => char.IsUpper(c));
-        private static int GetDigitsCount(string s) => s.Count((c) => char.IsDigit(c));
-        private static int GetNonLettersCount(string s) => s.Count((c) => char.IsPunctuation(c)&&(!char.IsDigit(c)));
+        public static bool CheckUpperCaseCount(string s, int count) => GetUpperLettersCount(s) >= count;
+        public static bool CheckDigitsCaseCount(string s, int count) => GetDigitsCount(s) >= count;
+        public static bool CheckNonLettersCount(string s, int count) => GetNonLettersCount(s) >= count;
+        public static int GetUpperLettersCount(string s) => s.Count((c) => char.IsUpper(c));
+        public static int GetDigitsCount(string s) => s.Count((c) => char.IsDigit(c));
+        public static int GetNonLettersCount(string s) => s.Count((c) => !char.IsLetterOrDigit(c));
 
     }
 }
