@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CommandLine;
 
-using CommandLine;
-
 namespace PassGen
 {
     class Program
@@ -27,19 +25,35 @@ namespace PassGen
                     option.DigitsCount,
                     option.NonLettersCount);
 
+            if (PasswordGenerator.CheckPasswordReuirements(requirements))
+            {
+                PrintPassword(requirements, option.PrintStatistic);
+            }
+            else
+            {
+                Console.WriteLine("Incorrect password requirements.");
+            }
+
+
+            if (option.WaitUserInput)
+            {
+                Console.WriteLine("Press enter to exit.");
+                Console.ReadLine();
+            }
+
+            return 1;
+        }
+
+        private static void PrintPassword(PasswordRequirements requirements, bool printStatistic)
+        {
             var pass = PasswordGenerator.GetPassword(requirements);
 
             Console.WriteLine(pass);
 
-            if (option.PrintStatistic)
+            if (printStatistic)
             {
                 PrintStatistic(pass);
             }
-
-            Console.WriteLine("Press enter to exit.");
-            Console.ReadLine();
-
-            return 1;
         }
 
         private static int Error(IEnumerable<Error> errors)
@@ -50,6 +64,7 @@ namespace PassGen
 
         private static void PrintStatistic(string s)
         {
+            Console.WriteLine($"Length:\t{s.Length}");
             Console.WriteLine($"Upper letters count:\t{s.Count((c)=>char.IsUpper(c))}");
             Console.WriteLine($"Lower letters count:\t{s.Count((c)=>char.IsLower(c))}");
             Console.WriteLine($"Digits count:\t{s.Count((c)=>char.IsDigit(c))}");

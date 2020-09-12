@@ -7,7 +7,7 @@ using CommandLine;
 
 namespace PassGen
 {
-    [Verb("generate", HelpText = "Generate password")]
+    [Verb( "generate", HelpText = "Generate password")]
     public class CommandLineGenerateOption
     {
         [Option('l', "length",  Default = 10,  HelpText = "Password length")]
@@ -22,7 +22,10 @@ namespace PassGen
         [Option('n', "nonLetters", Default = 2, HelpText = "Non letter characters count")]
         public int NonLettersCount { get; set; }
 
-        [Option('s', "stat", Default = true, HelpText = "Print password statisitic")]
+        [Option('s', "stat", Default = false, HelpText = "Print password statisitic")]
         public bool PrintStatistic { get; set; }
+
+        [Option('w', "wait", Default = false, HelpText = "Wait for user input")]
+        public bool WaitUserInput { get; set; }
     }
 }
