@@ -25,7 +25,7 @@ namespace PassGen
                     option.DigitsCount,
                     option.NonLettersCount);
 
-            if (PasswordGenerator.CheckPasswordReuirements(requirements))
+            if (PasswordGenerator.CheckPasswordRequirements(requirements))
             {
                 PrintPassword(requirements, option.PrintStatistic);
             }

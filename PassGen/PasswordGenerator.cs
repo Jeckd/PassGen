@@ -17,7 +17,7 @@ namespace PassGen
 
         public static string GetPassword(PasswordRequirements requirement)
         {
-            if (!CheckPasswordReuirements(requirement))
+            if (!CheckPasswordRequirements(requirement))
                 throw new InvalidOperationException("Wrong password requirements");
 
             var password = GetPassword(requirement.Length);
@@ -44,7 +44,7 @@ namespace PassGen
 
         private static char GetRandomPasswordChar() => Convert.ToChar(GetRandomCharCode(MinCharValue, MaxCharValue));
 
-        public static bool CheckPasswordReuirements(PasswordRequirements r)=> r.Length >= (r.UpperLettersCount + r.DigitsCount + r.NonLettersCount);
+        public static bool CheckPasswordRequirements(PasswordRequirements r)=> r.Length >= (r.UpperLettersCount + r.DigitsCount + r.NonLettersCount);
         public static bool CheckPassword(string s, PasswordRequirements r) =>
                 s.Length == r.Length
                 && CheckUpperCaseCount(s, r.UpperLettersCount)
